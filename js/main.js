@@ -165,3 +165,24 @@ document.querySelector('button#start').addEventListener('click', async () => {
   console.log('Using media constraints:', constraints);
   await init(constraints);
 });
+
+const loadFromCacheButton = document.querySelector('button#loadFromCache');
+loadFromCacheButton.addEventListener('click', () => {
+  loadVideoFromCache();
+});
+
+function loadVideoFromCache() {
+  const cachedVideoBlob = localStorage.getItem('recordedVideo');
+  if (cachedVideoBlob) {
+    const superBuffer = new Blob([cachedVideoBlob], { type: 'video/webm' });
+    recordedVideo.src = null;
+    recordedVideo.srcObject = null;
+    recordedVideo.src = window.URL.createObjectURL(superBuffer);
+    recordedVideo.controls = true;
+    recordedVideo.play();
+    console.log('Video loaded from cache.');
+  } else {
+    console.error('No video data found in cache.');
+    errorMsgElement.innerHTML = 'No video data found in cache';
+  }
+}
