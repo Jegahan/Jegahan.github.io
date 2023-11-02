@@ -101,7 +101,14 @@ function startRecording() {
   mediaRecorder.onstop = (event) => {
     console.log('Recorder stopped: ', event);
     console.log('Recorded Blobs: ', recordedBlobs);
+
+    
+    // MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+        // Save the recordedBlob to localStorage
+    saveToCache(new Blob(recordedBlobs, { type: 'video/webm' }));
   };
+
+  
   mediaRecorder.ondataavailable = handleDataAvailable;
   mediaRecorder.start();
   console.log('MediaRecorder started', mediaRecorder);
@@ -109,6 +116,12 @@ function startRecording() {
 
 function stopRecording() {
   mediaRecorder.stop();
+}
+
+//MMMMMMMMMMMMMMMMMMMMM
+function saveToCache(blob) {
+  // Save the recordedBlob to localStorage
+  localStorage.setItem('recordedVideo', blob);
 }
 
 function handleSuccess(stream) {
