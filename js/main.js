@@ -36,10 +36,10 @@ recordButton.addEventListener('click', () => {
 const playButton = document.querySelector('button#play');
 playButton.addEventListener('click', () => {
   const mimeType = codecPreferences.options[codecPreferences.selectedIndex].value.split(';', 1)[0];
-  const superBuffer = new Blob(recordedBlobs, { type: mimeType });
+  const superBuffer = new Blob(recordedBlobs, {type: mimeType});
   recordedVideo.src = null;
   recordedVideo.srcObject = null;
-  recordedVideo.src = URL.createObjectURL(superBuffer); // Use URL directly
+  recordedVideo.src = window.URL.createObjectURL(superBuffer);
   recordedVideo.controls = true;
   recordedVideo.play();
 });
@@ -101,14 +101,7 @@ function startRecording() {
   mediaRecorder.onstop = (event) => {
     console.log('Recorder stopped: ', event);
     console.log('Recorded Blobs: ', recordedBlobs);
-
-    
-    // MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-        // Save the recordedBlob to localStorage
-    saveToCache(new Blob(recordedBlobs, { type: 'video/webm' }));
   };
-
-  
   mediaRecorder.ondataavailable = handleDataAvailable;
   mediaRecorder.start();
   console.log('MediaRecorder started', mediaRecorder);
@@ -116,18 +109,6 @@ function startRecording() {
 
 function stopRecording() {
   mediaRecorder.stop();
-}
-
-//MMMMMMMMMMMMMMMMMMMMM
-function saveToCache(blob) {
-  // Convert the Blob to an array buffer
-  blob.arrayBuffer().then((arrayBuffer) => {
-    // Convert the array buffer to a string (base64 encoding)
-    const blobData = btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));
-    // Save the base64-encoded string to localStorage
-    localStorage.setItem('recordedVideo', blobData);
-    console.log('Video data saved to localStorage.');
-  });
 }
 
 function handleSuccess(stream) {
@@ -171,27 +152,3 @@ document.querySelector('button#start').addEventListener('click', async () => {
   console.log('Using media constraints:', constraints);
   await init(constraints);
 });
-
-const loadFromCacheButton = document.querySelector('button#loadFromCache');
-loadFromCacheButton.addEventListener('click', () => {
-  loadVideoFromCache();
-});
-
-function loadVideoFromCache() {
-  const cachedVideoData = localStorage.getItem('recordedVideo');
-  if (cachedVideoData) {
-    // Convert the base64-encoded string back to an array buffer
-    const arrayBuffer = new Uint8Array(atob(cachedVideoData).split('').map(char => char.charCodeAt(0))).buffer;
-    // Create a Blob from the array buffer
-    const superBuffer = new Blob([arrayBuffer], { type: 'video/webm' });
-    recordedVideo.src = null;
-    recordedVideo.srcObject = null;
-    recordedVideo.src = window.URL.createObjectURL(superBuffer);
-    recordedVideo.controls = true;
-    recordedVideo.play();
-    console.log('Video loaded from cache.');
-  } else {
-    console.error('No video data found in cache.');
-    errorMsgElement.innerHTML = 'No video data found in cache';
-  }
-}
