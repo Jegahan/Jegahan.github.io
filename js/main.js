@@ -36,10 +36,10 @@ recordButton.addEventListener('click', () => {
 const playButton = document.querySelector('button#play');
 playButton.addEventListener('click', () => {
   const mimeType = codecPreferences.options[codecPreferences.selectedIndex].value.split(';', 1)[0];
-  const superBuffer = new Blob(recordedBlobs, {type: mimeType});
+  const superBuffer = new Blob(recordedBlobs, { type: mimeType });
   recordedVideo.src = null;
   recordedVideo.srcObject = null;
-  recordedVideo.src = window.URL.createObjectURL(superBuffer);
+  recordedVideo.src = URL.createObjectURL(superBuffer); // Use URL directly
   recordedVideo.controls = true;
   recordedVideo.play();
 });
