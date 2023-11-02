@@ -120,8 +120,14 @@ function stopRecording() {
 
 //MMMMMMMMMMMMMMMMMMMMM
 function saveToCache(blob) {
-  // Save the recordedBlob to localStorage
-  localStorage.setItem('recordedVideo', blob);
+  // Convert the Blob to an array buffer
+  blob.arrayBuffer().then((arrayBuffer) => {
+    // Convert the array buffer to a string (base64 encoding)
+    const blobData = btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));
+    // Save the base64-encoded string to localStorage
+    localStorage.setItem('recordedVideo', blobData);
+    console.log('Video data saved to localStorage.');
+  });
 }
 
 function handleSuccess(stream) {
@@ -172,9 +178,12 @@ loadFromCacheButton.addEventListener('click', () => {
 });
 
 function loadVideoFromCache() {
-  const cachedVideoBlob = localStorage.getItem('recordedVideo');
-  if (cachedVideoBlob) {
-    const superBuffer = new Blob([cachedVideoBlob], { type: 'video/webm' });
+  const cachedVideoData = localStorage.getItem('recordedVideo');
+  if (cachedVideoData) {
+    // Convert the base64-encoded string back to an array buffer
+    const arrayBuffer = new Uint8Array(atob(cachedVideoData).split('').map(char => char.charCodeAt(0))).buffer;
+    // Create a Blob from the array buffer
+    const superBuffer = new Blob([arrayBuffer], { type: 'video/webm' });
     recordedVideo.src = null;
     recordedVideo.srcObject = null;
     recordedVideo.src = window.URL.createObjectURL(superBuffer);
