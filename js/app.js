@@ -1,5 +1,5 @@
 const container = document.querySelector(".container");
-const coffees = [
+/*const coffees = [
   {
     name: "Perspiciatis",
     image: "images/coffee1.jpg"
@@ -50,7 +50,7 @@ const showCoffees = () => {
               `)
   );
   container.innerHTML = output;
-};
+};*/
 
 document.addEventListener("DOMContentLoaded", showCoffees);
 
