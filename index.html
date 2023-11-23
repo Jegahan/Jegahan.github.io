@@ -34,89 +34,32 @@
   <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
   <div id="main">
     <main>
-      <div class="container">
-        <button id="askButton">Ask for location</button>
-
-        <div id="target"></div>
-
-
-      </div>
-    </main>
-    <table>
-      <tr>
-        <td>API used</td>
-        <td id="moApi"></td>
-      </tr>
-      <tr>
-        <td>linear acceleration (excl. gravity)</td>
-        <td id="moAccel"></td>
-      </tr>
-      <tr>
-        <td>acceleration incl. gravity</td>
-        <td id="moAccelGrav"></td>
-      </tr>
-      <tr>
-        <td>rotation rate</td>
-        <td id="moRotation"></td>
-      </tr>
-      <tr>
-        <td>interval (ms)</td>
-        <td id="moInterval"></td>
-      </tr>
-    </table>
-
-    <div class="columns">
-      <div class="column">
-        <button class="btn-file">
-          Choose some files to read<br>(File API) <input type="file" onchange="readFiles(this.files)" multiple>
-        </button>
-
-        <p>Number of selected files: <b id="count">N/A</b></p>
-      </div>
-      <div class="column">
-        <button class="btn-file" onclick="writeFile()">
-          Choose file to create or overwrite<br>(Native File System API)
-        </button>
-      </div>
-    </div>
-
-    <ul id="target"></ul>
-
-    <p>Estimated storage usage is <b id="usage">unknown</b> bytes.</p>
-    <p>Estimated storage quota is <b id="quota">unknown</b> bytes.</p>
-    <p>Estimated usage is <b id="percent">unknown</b>%.</p>
-    <p>Persistent storage status is <b id="persisted">unknown</b>.</p>
-    <p><button onclick="requestPersistence()">Request persistent storage</button></p>
-    <p><small>Demo based on <a href="https://www.html5rocks.com/en/tutorials/device/orientation/" target="_blank"
-          rel="noopener">HTML5 Rocks</a> article.</small></p>
+      
+      <table>
+        <tr>
+          <td>API used</td>
+          <td id="moApi"></td>
+        </tr>
+        <tr>
+          <td>linear acceleration (excl. gravity)</td>
+          <td id="moAccel"></td>
+        </tr>
+        <tr>
+          <td>acceleration incl. gravity</td>
+          <td id="moAccelGrav"></td>
+        </tr>
+        <tr>
+          <td>rotation rate</td>
+          <td id="moRotation"></td>
+        </tr>
+        <tr>
+          <td>interval (ms)</td>
+          <td id="moInterval"></td>
+        </tr>
+      </table>
 
 
-    <p>
-      <button onclick="readContacts()">Read Contacts</button>
-    </p>
-
-    <pre id="log"></pre>
-
-
-    <p>
-      <label>Engine</label>
-    </p>
-    <div role="group" id="selectEngine">
-      <input type="radio" name="engine" value="localStorage" checked /> Persistent Storage
-      <input type="radio" name="engine" value="sessionStorage" /> Per-Session Storage
-    </div>
-
-    <p>
-      <label for="value">Value for <code>myKey</code></label>
-      <input type="text" id="value">
-    </p>
-
-    <p>Open the example in another tab and change the value there to see the synchronization via <code>storage</code>
-      event.</p>
-    <div id="target"></div>
-
-
-    <script src="js/app.js"></script>
+      <script src="js/app.js"></script>
   </div>
 
 </body>
