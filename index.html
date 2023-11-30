@@ -14,48 +14,32 @@
 </head>
 
 <body>
-  <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="index.html">Home</a>
-    <a href="Battery.html">Battery</a>
-  </div>
-
-  <!-- Use any element to open the sidenav -->
-  <span onclick="openNav()">open</span>
-
-  <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
-  <div id="main">
-   
-  </div>
-  <main>
-      
+  <div id="app">
+    <h1>Balance Tracker</h1>
     <table>
-      <tr>
-        <td>API used</td>
-        <td id="moApi"></td>
-      </tr>
-      <tr>
-        <td>linear acceleration (excl. gravity)</td>
-        <td id="moAccel"></td>
-      </tr>
-      <tr>
-        <td>acceleration incl. gravity</td>
-        <td id="moAccelGrav"></td>
-      </tr>
-      <tr>
-        <td>rotation rate</td>
-        <td id="moRotation"></td>
-      </tr>
-      <tr>
-        <td>interval (ms)</td>
-        <td id="moInterval"></td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Transaction</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody id="transactionTableBody">
+        <!-- Transaction rows will be inserted here dynamically -->
+      </tbody>
     </table>
+    <div>
+      <label for="transaction">Transaction:</label>
+      <input type="text" id="transaction" placeholder="e.g., Grocery">
+      <label for="amount">Amount:</label>
+      <input type="number" id="amount" placeholder="e.g., 50">
+      <button onclick="addTransaction()">Add Transaction</button>
+    </div>
+    <div>
+      <h2>Current Balance: <span id="currentBalance">0</span></h2>
+    </div>
+  </div>
 
-
-    <script src="js/app.js"></script>
-    </main>
-
+  <script src="app.js"></script>
 </body>
-
 </html>
