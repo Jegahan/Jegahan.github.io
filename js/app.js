@@ -18,25 +18,27 @@ document.addEventListener('DOMContentLoaded', () => {
     updateBalance();
 
     // Function to add a new transaction
-    window.addTransaction = () => {
-        const date = document.getElementById('date').value;
-        const type = document.getElementById('type').value;
-        const amount = parseFloat(document.getElementById('amount').value);
+   // Function to add a new transaction
+window.addTransaction = () => {
+    const date = document.getElementById('date').value;
+    const type = document.getElementById('type').value;
+    const amount = parseFloat(document.getElementById('amount').value);
 
-        if (date && type && !isNaN(amount)) {
-            const transaction = { date, type, amount };
-            transactions.push(transaction);
+    if (date && type && !isNaN(amount)) {
+        const transaction = { date, type, amount };
+        transactions.push(transaction);
 
-            // Update local storage and UI
-            localStorage.setItem('transactions', JSON.stringify(transactions));
-            updateTable();
-            updateBalance();
+        // Update local storage and UI
+        localStorage.setItem('transactions', JSON.stringify(transactions));
+        updateTable();
+        updateBalance();
 
-            // Clear input fields
-            document.getElementById('date').value = '';
-            document.getElementById('amount').value = '';
-        }
-    };
+        // Clear input fields
+        document.getElementById('date').value = '';
+        document.getElementById('amount').value = '';
+    }
+};
+
 
     // Function to update the transaction table
     function updateTable() {
