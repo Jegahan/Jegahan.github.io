@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to add a new transaction
    // Function to add a new transaction
-function addTransaction = () => {
+function addTransaction()  {
     const date = document.getElementById('date').value;
     const type = document.getElementById('type').value;
     const amount = parseFloat(document.getElementById('amount').value);
