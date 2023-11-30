@@ -1,69 +1,63 @@
-// app.js
 document.addEventListener('DOMContentLoaded', () => {
-  // Check for cached transactions and load them
-  const cachedTransactions = JSON.parse(localStorage.getItem('transactions')) || [];
-  const transactionTableBody = document.getElementById('transactionTableBody');
-  const currentBalanceSpan = document.getElementById('currentBalance');
-
-  let transactions = cachedTransactions;
-
-  // Display transactions from cache
-  displayTransactions();
-
-  // Display current balance
-  updateBalance();
-
-  // Function to add a new transaction
-  window.addTransaction = function () {
-    const transactionInput = document.getElementById('transaction');
-    const amountInput = document.getElementById('amount');
-
-    const transaction = transactionInput.value.trim();
-    const amount = parseFloat(amountInput.value);
-
-    if (transaction && !isNaN(amount)) {
-      const newTransaction = {
-        date: new Date().toLocaleDateString(),
-        transaction,
-        amount,
-      };
-
-      transactions.push(newTransaction);
-      saveTransactionsToLocalStorage();
-      displayTransactions();
-      updateBalance();
-
-      // Clear input fields
-      transactionInput.value = '';
-      amountInput.value = '';
-    } else {
-      alert('Please enter valid transaction details.');
+    // Check if service workers are supported
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+            .then(registration => {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(error => {
+                console.error('Service Worker registration failed:', error);
+            });
     }
-  };
 
-  // Function to display transactions in the table
-  function displayTransactions() {
-    transactionTableBody.innerHTML = '';
+    // Fetch cached data or initialize an empty array
+    const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 
-    transactions.forEach((transaction) => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${transaction.date}</td>
-        <td>${transaction.transaction}</td>
-        <td>${transaction.amount}</td>
-      `;
-      transactionTableBody.appendChild(row);
-    });
-  }
+    // Display initial data
+    updateTable();
+    updateBalance();
 
-  // Function to update the current balance
-  function updateBalance() {
-    const totalBalance = transactions.reduce((total, transaction) => total + transaction.amount, 0);
-    currentBalanceSpan.textContent = totalBalance.toFixed(2);
-  }
+    // Function to add a new transaction
+    window.addTransaction = () => {
+        const date = document.getElementById('date').value;
+        const type = document.getElementById('type').value;
+        const amount = parseFloat(document.getElementById('amount').value);
 
-  // Function to save transactions to local storage
-  function saveTransactionsToLocalStorage() {
-    localStorage.setItem('transactions', JSON.stringify(transactions));
-  }
+        if (date && type && !isNaN(amount)) {
+            const transaction = { date, type, amount };
+            transactions.push(transaction);
+
+            // Update local storage and UI
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+            updateTable();
+            updateBalance();
+
+            // Clear input fields
+            document.getElementById('date').value = '';
+            document.getElementById('amount').value = '';
+        }
+    };
+
+    // Function to update the transaction table
+    function updateTable() {
+        const tableBody = document.querySelector('#expense-table tbody');
+        tableBody.innerHTML = '';
+
+        transactions.forEach(transaction => {
+            const row = tableBody.insertRow();
+            row.insertCell().textContent = transaction.date;
+            row.insertCell().textContent = transaction.type;
+            row.insertCell().textContent = `$${transaction.amount.toFixed(2)}`;
+        });
+    }
+
+    // Function to update the balance
+    function updateBalance() {
+        const balanceElement = document.getElementById('balance');
+        const balance = transactions.reduce((acc, transaction) => {
+            return transaction.type === 'income' ? acc + transaction.amount : acc - transaction.amount;
+        }, 0);
+
+        balanceElement.textContent = `Balance: $${balance.toFixed(2)}`;
+    }
 });
