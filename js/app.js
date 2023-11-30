@@ -41,7 +41,6 @@ if ('getBattery' in navigator || ('battery' in navigator && 'Promise' in window)
     battery.addEventListener('dischargingtimechange', onDischargingTimeChange);
     battery.addEventListener('levelchange', onLevelChange);
   });
-
 }
 
 
