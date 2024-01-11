@@ -16,13 +16,13 @@ body {
 
 .test-element {
     height: 100px;
-    background-color: black;
+    background-color: rgb(218, 231, 29);
     width: 100px;
     z-index: 5;
     position: absolute;
     top: 15px;
     left: 15px;
-    color: white;
+    color: black;
     text-align: center;
     -ms-touch-action: none;
   }
@@ -36,6 +36,11 @@ body {
   
   .test-element:nth-child(3) {
     top: 50px;
+    left: 100px;
+  }
+
+  .test-element:nth-child(4) {
+    top: 100px;
     left: 100px;
   }
 
