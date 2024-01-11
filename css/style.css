@@ -40,10 +40,11 @@ body {
   }
 
   .section {
-    width: 100%;
+    width: 33%;
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
     background-color: #f0f0f0;
-    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
 }
