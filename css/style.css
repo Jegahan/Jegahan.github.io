@@ -39,11 +39,14 @@ body {
     left: 100px;
   }
 
+  .d-flex {
+    display: flex;
+  }
+
   .section {
     width: 33%;
+    height: 100vh;
     text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
     background-color: #f0f0f0;
     border-right: 1px solid #ccc;
     border-left: 1px solid #ccc;
