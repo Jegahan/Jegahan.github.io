@@ -10,56 +10,48 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // Fetch cached data or initialize an empty array
-    const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+    function startDrag(e) {
+        this.ontouchmove = this.onmspointermove = moveDrag;
 
-    // Display initial data
-    updateTable();
-    updateBalance();
+        this.ontouchend = this.onmspointerup = function () {
+            this.ontouchmove = this.onmspointermove = null;
+            this.ontouchend = this.onmspointerup = null;
+        }
 
-    // Function to add a new transaction
-   // Function to add a new transaction
-function addTransaction()  {
-    const date = document.getElementById('date').value;
-    const type = document.getElementById('type').value;
-    const amount = parseFloat(document.getElementById('amount').value);
+        var pos = [this.offsetLeft, this.offsetTop];
+        var that = this;
+        var origin = getCoors(e);
 
-    if (date && type && !isNaN(amount)) {
-        const transaction = { date, type, amount };
-        transactions.push(transaction);
+        function moveDrag(e) {
+            var currentPos = getCoors(e);
+            var deltaX = currentPos[0] - origin[0];
+            var deltaY = currentPos[1] - origin[1];
+            this.style.left = (pos[0] + deltaX) + 'px';
+            this.style.top = (pos[1] + deltaY) + 'px';
+            return false; // cancels scrolling
+        }
 
-        // Update local storage and UI
-        localStorage.setItem('transactions', JSON.stringify(transactions));
-        updateTable();
-        updateBalance();
-
-        // Clear input fields
-        document.getElementById('date').value = '';
-        document.getElementById('amount').value = '';
-    }
-};
-
-
-    // Function to update the transaction table
-    function updateTable() {
-        const tableBody = document.querySelector('#expense-table tbody');
-        tableBody.innerHTML = '';
-
-        transactions.forEach(transaction => {
-            const row = tableBody.insertRow();
-            row.insertCell().textContent = transaction.date;
-            row.insertCell().textContent = transaction.type;
-            row.insertCell().textContent = `$${transaction.amount.toFixed(2)}`;
-        });
+        function getCoors(e) {
+            var coors = [];
+            if (e.targetTouches && e.targetTouches.length) {
+                var thisTouch = e.targetTouches[0];
+                coors[0] = thisTouch.clientX;
+                coors[1] = thisTouch.clientY;
+            } else {
+                coors[0] = e.clientX;
+                coors[1] = e.clientY;
+            }
+            return coors;
+        }
     }
 
-    // Function to update the balance
-    function updateBalance() {
-        const balanceElement = document.getElementById('balance');
-        const balance = transactions.reduce((acc, transaction) => {
-            return transaction.type === 'income' ? acc + transaction.amount : acc - transaction.amount;
-        }, 0);
+    var elements = document.querySelectorAll('.test-element');
+    [].forEach.call(elements, function (element) {
+        element.ontouchstart = element.onmspointerdown = startDrag;
+    });
 
-        balanceElement.textContent = `Balance: $${balance.toFixed(2)}`;
+    document.ongesturechange = function () {
+        return false;
     }
+
 });
