@@ -42,7 +42,6 @@ document.ongesturechange = function () {
   return false;
 }
 
-document.addEventListener("DOMContentLoaded");
 
 if ("serviceWorker" in navigator) {
   let version = 1;
