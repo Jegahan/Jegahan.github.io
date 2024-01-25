@@ -11,36 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 }
 
-  
-const container = document.querySelector(".container");
-
-
-//Save "Notes" object e.g. boxes objects inside elements
-var elements = document.querySelectorAll('.test-element');
-
-
-//Add new notes ba appending new box object into boxContainer where all created notes land intially
-function addBox() {
-  var boxContainer = document.getElementById("boxContainer");
-  var newBox = document.createElement("div");
-  newBox.className = "test-element";
-  newBox.textContent = "newTask"; // Add text or other content as needed
-  boxContainer.appendChild(newBox);
-  makeDraggable(newBox); // Make the new box draggable
-}
-
-
-//Allows for moving notes
-function makeDraggable(element) {
-  element.ontouchstart = element.onmspointerdown = startDrag;
-}
-
-
-var elements = document.querySelectorAll('.test-element');
-elements.forEach(makeDraggable);
-
-// Add new box on button click event. Is being called on pressing the add box button. (Box = Note)
-document.getElementById("addBoxBtn").addEventListener("click", addBox);
 
 
 function startDrag(e) {
