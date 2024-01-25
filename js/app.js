@@ -40,17 +40,17 @@ var elements = document.querySelectorAll('.test-element');
 
 document.ongesturechange = function () {
   return false;
-
+}
 
 document.addEventListener("DOMContentLoaded", showCoffees);
 
 if ("serviceWorker" in navigator) {
+  let version = 1;
   window.addEventListener("load", function() {
     navigator.serviceWorker
-      .register("/serviceWorker.js")
-      .then(res => console.log("service worker registered"))
-      .catch(err => console.log("service worker not registered", err));
+     .register("./serviceWorker.js",{ scope: "./" })
+      .then(res => console.log("Service worker registered !" + "version:" + version))
+      .catch(err => console.log("Service worker not registered !" + "version:" + version, err));
   });
-}
 }
 
