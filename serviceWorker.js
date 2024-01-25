@@ -16,6 +16,9 @@ const assets = [
 ];
 
 self.addEventListener("install", installEvent => {
+  console.log("Service worker installed with version" + version))
+  
+      .then(res => console.log("Service worker registered !" +
   installEvent.waitUntil(
     caches.open(staticDevCoffee).then(cache => {
       cache.addAll(assets);
