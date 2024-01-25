@@ -1,18 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Check if service workers are supported
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-      .then(registration => {
-        console.log('Service Worker registered with scope:', registration.scope);
-      })
-      .catch(error => {
-        console.error('Service Worker registration failed:', error);
-      });
-  }
-}
-
-
-
 function startDrag(e) {
   this.ontouchmove = this.onmspointermove = moveDrag;
 
@@ -55,5 +40,17 @@ var elements = document.querySelectorAll('.test-element');
 
 document.ongesturechange = function () {
   return false;
+
+
+document.addEventListener("DOMContentLoaded", showCoffees);
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker
+      .register("/serviceWorker.js")
+      .then(res => console.log("service worker registered"))
+      .catch(err => console.log("service worker not registered", err));
+  });
+}
 }
 
